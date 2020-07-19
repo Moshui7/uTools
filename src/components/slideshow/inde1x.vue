@@ -18,15 +18,17 @@
       </ul>
       <ul class="direction">
         <li class="left" @click="move(600, 1, speed)">
-          <svg class="icon" width="30px" height="30.00px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <svg class="icon" width="30px" height="30.00px" viewBox="0 0 1024 1024" version="1.1"
+               xmlns="http://www.w3.org/2000/svg">
             <path fill="#ffffff"
-                  d="M481.233 904c8.189 0 16.379-3.124 22.628-9.372 12.496-12.497 12.496-32.759 0-45.256L166.488 512l337.373-337.373c12.496-12.497 12.496-32.758 0-45.255-12.498-12.497-32.758-12.497-45.256 0l-360 360c-12.496 12.497-12.496 32.758 0 45.255l360 360c6.249 6.249 14.439 9.373 22.628 9.373z" />
+                  d="M481.233 904c8.189 0 16.379-3.124 22.628-9.372 12.496-12.497 12.496-32.759 0-45.256L166.488 512l337.373-337.373c12.496-12.497 12.496-32.758 0-45.255-12.498-12.497-32.758-12.497-45.256 0l-360 360c-12.496 12.497-12.496 32.758 0 45.255l360 360c6.249 6.249 14.439 9.373 22.628 9.373z"/>
           </svg>
         </li>
         <li class="right" @click="move(600, -1, speed)">
-          <svg class="icon" width="30px" height="30.00px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <svg class="icon" width="30px" height="30.00px" viewBox="0 0 1024 1024" version="1.1"
+               xmlns="http://www.w3.org/2000/svg">
             <path fill="#ffffff"
-                  d="M557.179 904c-8.189 0-16.379-3.124-22.628-9.372-12.496-12.497-12.496-32.759 0-45.256L871.924 512 534.551 174.627c-12.496-12.497-12.496-32.758 0-45.255 12.498-12.497 32.758-12.497 45.256 0l360 360c12.496 12.497 12.496 32.758 0 45.255l-360 360c-6.249 6.249-14.439 9.373-22.628 9.373z" />
+                  d="M557.179 904c-8.189 0-16.379-3.124-22.628-9.372-12.496-12.497-12.496-32.759 0-45.256L871.924 512 534.551 174.627c-12.496-12.497-12.496-32.758 0-45.255 12.498-12.497 32.758-12.497 45.256 0l360 360c12.496 12.497 12.496 32.758 0 45.255l-360 360c-6.249 6.249-14.439 9.373-22.628 9.373z"/>
           </svg>
         </li>
       </ul>
@@ -56,21 +58,22 @@
     },
     data() {
       return {
+        // 图片
         sliders: [
           {
-            img: '@/assets/slidshow/1.jpg'
+            img: require('@/assets/slidshow/1.jpg')
           },
           {
-            img: '@/assets/slidshow/1.jpg'
+            img: require('@/assets/slidshow/2.jpg')
           },
           {
-            img: '@/assets/slidshow/1.jpg'
+            img: require('@/assets/slidshow/3.jpg')
           },
           {
-            img: '@/assets/slidshow/1.jpg'
+            img: require('@/assets/slidshow/4.jpg')
           },
           {
-            img: '@/assets/slidshow/1.jpg'
+            img: require('@/assets/slidshow/5.jpg')
           }
         ],
         imgWidth: 600,

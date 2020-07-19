@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-    <slideshow/>
+    <router-link to="/slidshow/my">我的</router-link>
+    <router-link to="/slidshow/temp1">例1</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-
-  import Slideshow from './components/slideshow/index'
   export default {
-    name: 'App',
-    components: {Slideshow}
+    name: 'App'
   }
 </script>
 
