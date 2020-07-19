@@ -2,21 +2,26 @@
    - 页面加载，自动播放。鼠标悬停，停止播放。鼠标离开，继续播放
 　　- 点击左右箭头切换上一张，下一张图片。
 　　- 下方小圆点显示当前位第几张图片。-->
+<!-- 参数说明：
+   - 图片列表
+   - 轮播图宽、高
+   - 自动播放的时间间隔
+   - 图片滑动的速度
+ -->
 <template>
   <div>
-    <h3>轮播图</h3>
-    <div class="q-slideshow" @mouseleave="play" @mouseover="stop">
+    <div :style="initStyle" class="q-slideshow" @mouseleave="play" @mouseover="stop">
       <ul class="container">
-        <li :style="liOffset" v-for="(item,index) in sliders" :key="index">
+        <li :style="[liOffset,initStyle]" v-for="(item,index) in sliders" :key="index">
           <img :src="item.url" :alt="item.desc">
         </li>
       </ul>
       <ul class="direction">
         <li class="left">
-          <img src="./icons/left.svg" alt="向左" @click="move(600,-1)"/>
+          <img src="./icons/left.svg" alt="向左" @click="move(-1)"/>
         </li>
         <li class="right">
-          <img src="./icons/right.svg" alt="向右" @click="move(600,1)"/>
+          <img src="./icons/right.svg" alt="向右" @click="move(1)"/>
         </li>
       </ul>
       <ul class="dots">
@@ -29,61 +34,91 @@
 <script>
   export default {
     name: 'index',
+    props: {
+      sliderSize: {
+        type: Object,
+        default() {
+          return {
+            width: 600,
+            height: 400
+          }
+        }
+      },
+      sliders: {
+        type: Array,
+        default() {
+          return []
+        }
+      },
+      speed: {
+        type: Number,
+        default: 500
+      },
+      interval: {
+        type: Number,
+        default: 3000
+      }
+    },
     data() {
       return {
-        sliders: [
-          {url: require('@/assets/slidshow/1.jpg'), desc: '图1描述'},
-          {url: require('@/assets/slidshow/2.jpg'), desc: '图2描述'},
-          {url: require('@/assets/slidshow/3.jpg'), desc: '图3描述'},
-          {url: require('@/assets/slidshow/4.jpg'), desc: '图4描述'},
-          {url: require('@/assets/slidshow/5.jpg'), desc: '图5描述'}
-        ],
         offset: 0,
         activeIndex: 0,
         activeDotStyle: {
           backgroundColor: '#FFA500'
+        },
+        imgWidth: this.sliderSize.width,
+        initStyle: {
+          width: this.sliderSize.width + 'px',
+          height: this.sliderSize.height + 'px'
         }
       }
     },
     computed: {
       liOffset: function () {
-        return {transform: 'translate(' + this.offset + 'px,0)'}
+        return {
+          transform: 'translate(' + this.offset + 'px,0)',
+          transition: 'transform ' + this.speed + 'ms'
+        }
       }
     },
     created() {
       this.play()
     },
     methods: {
-      move(offset, direction) {
-        const speed = 30
-        this.offset += 600 * direction * (-1)
-        if (this.offset < -2400) this.offset = 0
-        if (this.offset > 0) this.offset = -2400
+      init() {
+
+      },
+      move(direction) {
+        const width = this.imgWidth
+        const sliderLength = this.sliders.length
+        const maxOffset = (sliderLength - 1) * width
+        this.offset += width * direction * (-1)
+        if (this.offset < -maxOffset) this.offset = 0
+        if (this.offset > 0) this.offset = -maxOffset
         this.activeIndex += direction
         if (this.activeIndex >= this.sliders.length) this.activeIndex = 0
         if (this.activeIndex < 0) this.activeIndex = this.sliders.length - 1
-        console.log(this.activeIndex, this.offset)
       },
       jump(i) {
         // console.log('切换到第' + i + '张')
-        this.offset = -1 * i * 600
+        this.offset = -1 * i * this.imgWidth
         this.activeIndex = i
       },
       play() {
         this.timer = setInterval(() => {
           this.activeIndex++
-          this.offset = -1 * this.activeIndex * 600
+          this.offset = -1 * this.activeIndex * this.imgWidth
           if (this.activeIndex >= this.sliders.length) {
             this.activeIndex = 0
             this.offset = 0
           }
           if (this.activeIndex < 0) {
             this.activeIndex = this.sliders.length - 1
-            this.offset = -2400
+            this.offset = -(this.sliders.length - 1) * this.imgWidth
           }
-        }, 2000)
+        }, this.interval)
       },
-      stop(){
+      stop() {
         clearInterval(this.timer)
         this.timer = null
       }
@@ -95,8 +130,8 @@
   .q-slideshow {
     text-align: center;
     position: relative;
-    width: 600px;
-    height: 400px;
+    /*width: 600px;
+    height: 400px;*/
     margin: 0 auto;
     overflow: hidden;
 
@@ -111,11 +146,10 @@
       position: absolute;
 
       li {
-        width: 600px;
-        height: 400px;
+        /*height: 400px;*/
+        /*width: 600px;*/
         overflow: hidden;
-        transition: transform 2s;
-        /*transform: translate(-600px,0);*/
+        /*transition: transform 2s;*/
       }
     }
 

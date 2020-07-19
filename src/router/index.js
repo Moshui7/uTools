@@ -6,7 +6,7 @@ Vue.use(Router)
 const routes = [
   {
     path: '/slidshow/my',
-    component: () => import('@/components/slideshow/q')
+    component: () => import('@/views/slideshow/index')
   },
   {
     path: '/slidshow/temp1',
